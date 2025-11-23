@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- this is the title that will appear on the top of the browser-->
+  <title>Zino | Portfolio</title> 
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Main site header with navigation and theme toggle -->
+     <header class="site-header" id="top">
+    <div class="container header-content">
+      <div class="brand">
+        <!-- Display my name at the top-->
+
+        <a href="#top" class="brand__link">Baraa Tammam Zino</a>
+      </div>
+      <nav class="site-nav" aria-label="Primary">
+        <!--Navigation list -->
+
+        <ul class="nav-list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects &amp; Research</a></li>
+          <li><a href="#awards">Awards</a></li>
+          <li><a href="#skills">Skills &amp; Tools</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <!-- Dark mode button -->
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+        <span class="theme-toggle__label">Dark mode</span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <!-- Main section introducing the portfolio owner -->
+    <section class="hero" id="about">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <p class="hero-greeting" id="greeting" aria-live="polite"></p>
+          <h1>Hi, I'm Baraa Tammam Zino</h1>
+          <p class="hero-tagline">Computer science student specializing in AI and machine learning.</p>
+          <p>
+            I am based in Dhahran, Saudi Arabia, and currently pursuing a Bachelor of Science in Computer Science at KFUPM.
+            I enjoy building intelligent solutions, collaborating with student clubs, and expanding my skills through advanced
+            programs such as the KAUST Academy.
+          </p>
+          <!--edit the personalized greeting depending on your name, it will save it locally-->
+          <form class="name-preference" id="name-preference" aria-describedby="name-feedback">
+            <label for="preferred-name">Want a personalized greeting?</label>
+            <div class="name-preference__controls">
+              <input type="text" id="preferred-name" name="preferred-name" placeholder="Enter your name">
+              <button type="submit" id="save-name">Remember me</button>
+              <button type="button" id="clear-name">Reset</button>
+            </div>
+            <p class="name-preference__status" id="name-feedback" role="status" aria-live="polite"></p>
+          </form>
+          <div class="hero-actions">
+            <!--ancors for my projects and contact -->
+            <a class="cta" href="#projects">Explore my work</a>
+            <a class="cta cta--ghost" href="#contact">Let's connect</a>
+          </div>
+        </div>
+        <!-- Display my image-->
+        <div class="hero-image">
+          <img src="assets/images/baraa_zino_original.jpg" alt="Illustration representing Baraa Tammam Zino">
+        </div>
+      </div>
+    </section>
+    <section class="spotlight" id="spotlight" data-animate>
+      <div class="container spotlight-container">
+        <div class="spotlight-header">
+          <h2>What would you like to explore?</h2>
+          <p>Switch between focus areas to discover more about my journey.</p>
+        </div>
+        <!-- you can display multiple things here by changing the contenct using the tabs -->
+        <div class="spotlight-controls" role="tablist" aria-label="Portfolio highlights">
+          <button type="button" class="spotlight-toggle is-active" data-target="about" role="tab" aria-selected="true">About Me</button>
+          <button type="button" class="spotlight-toggle" data-target="projects" role="tab" aria-selected="false">Projects</button>
+          <button type="button" class="spotlight-toggle" data-target="goals" role="tab" aria-selected="false">Goals</button>
+        </div>
+        <div class="spotlight-panel" id="spotlight-panel" role="tabpanel">
+          <article class="spotlight-card is-visible" data-spotlight="about">
+            <!--Option 1  -->
+            <h3>Community-driven student</h3>
+            <p>I thrive when collaborating with clubs and cross-disciplinary peers to craft solutions that have positive impact on campus life.</p>
+          </article>
+          <!--Option 2 -->
+          <article class="spotlight-card" hidden data-spotlight="projects">
+            <h3>Project-first mindset</h3>
+            <p>From NLP toolkits to OCR improvements, I enjoy iterating fast, gathering feedback, and polishing prototypes into shareable experiences.</p>
+          </article>
+          <!--Option 3  -->
+          <article class="spotlight-card" hidden data-spotlight="goals">
+            <h3>Always learning</h3>
+            <p>This year I am focused on strengthening production-grade AI workflows, diving into MLOps, and contributing to open source initiatives.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- Experience with highlighting roles and responsibilities -->
+    <section class="experience" id="experience" data-animate>
+      <div class="container">
+        <h2>Experience</h2>
+        <div class="experience-grid">
+          <article class="experience-card">
+            <header>
+              <h3>Artificial Intelligence Summer School Participant</h3>
+              <p class="experience-meta">KAUST Academy • Thuwal, Saudi Arabia • 06/2025 – 08/2025</p>
+            </header>
+            <ul>
+              <li>Completed an eight-week intensive program covering Computer Vision, Reinforcement Learning, and NLP.</li>
+              <li>Developed an Agentic AI salesman prototype tailored for a major company.</li>
+              <li>Balanced theoretical instruction with hands-on projects to tackle emerging AI challenges.</li>
+            </ul>
+          </article>
+
+          <article class="experience-card">
+            <header>
+              <h3>ICS104 &amp; SWE206 Grader</h3>
+              <p class="experience-meta">King Fahd University of Petroleum &amp; Minerals</p>
+            </header>
+            <ul>
+              <li>Evaluated assignments and homework with a focus on fairness and consistency.</li>
+              <li>Delivered constructive feedback to strengthen students' grasp of programming concepts.</li>
+            </ul>
+          </article>
+
+          <article class="experience-card">
+            <header>
+              <h3>Public Relations Head</h3>
+              <p class="experience-meta">Sports Club at KFUPM</p>
+            </header>
+            <ul>
+              <li>Fostered relationships with sponsors, media, and university departments.</li>
+              <li>Represented the club as spokesperson, ensuring transparent communication with stakeholders.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured projects and research summaries -->
+    <section class="projects" id="projects" data-animate>
+      <div class="container">
+        <h2>Projects &amp; Research</h2>
+        <div class="project-grid">
+          <article class="project-card" data-animate>
+            <img src="assets/images/DSC_5707_with_watermark_50.jpg" alt="Visualization for Jarir NLP project placeholder graphic">
+            <div class="project-card__body">
+              <h3>Jarir NLP Engagement Toolkit</h3>
+              <p>Natural language processing workflows that personalize Jarir Bookstore communications and automate product discovery.</p>
+              <a href="https://github.com/A1maan/Jarir-NLP" class="project-link" target="_blank" rel="noopener" aria-label="Jarir NLP Engagement Toolkit GitHub repository">View on GitHub</a>
+              <button type="button" class="project-toggle" aria-expanded="false">
+                Project details
+              </button>
+              <div class="project-details" hidden>
+                <ul>
+                  <li>Fine-tuned transformer models on customer support transcripts to improve recommendation accuracy.</li>
+                  <li>Deployed experimentation dashboard to compare prompt templates and success metrics.</li>
+                  <li>Collaborated with a QA partner to automate smoke tests for new conversational flows.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="project-card" data-animate>
+            <img src="assets/images/OCR.jpg" alt="Visualization of OCR research project placeholder graphic">
+            <div class="project-card__body">
+              <h3>OCR Post-Processing for Arabic Manuscripts</h3>
+              <p>Research pipeline improving OCR accuracy for historical Arabic texts through custom language models and context-aware correction.</p>
+              <a href="#" class="project-link" aria-label="OCR Post-Processing for Arabic Manuscripts research details">Research summary coming soon</a>
+              <button type="button" class="project-toggle" aria-expanded="false">
+                Project details
+              </button>
+              <div class="project-details" hidden>
+                <ul>
+                  <li>Curated multi-century manuscripts dataset and annotated edge cases with domain experts.</li>
+                  <li>Integrated language model rescoring to reduce false positives in ligature-heavy scripts.</li>
+                  <li>Designed evaluation harness comparing CER/WER metrics across iterative model versions.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- Recognition and honors list -->
+    <section class="awards" id="awards" data-animate>
+      <div class="container">
+        <h2>Awards</h2>
+        <div class="awards-grid">
+          <article class="award-card">
+            <h3>Calculus Excellence Award</h3>
+            <p>Honored among the top ten students in two calculus courses for consistent mastery and performance.</p>
+          </article>
+          <article class="award-card">
+            <h3>Dean's List</h3>
+            <p>Recognized by the Information &amp; Computer Science Department for outstanding academic achievement.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skill set overview -->
+    <section class="skills" id="skills" data-animate>
+      <div class="container">
+        <h2>Skills &amp; Tools</h2>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>Java</li>
+          <li>PyTorch</li>
+          <li>pandas</li>
+          <li>Git</li>
+          <li>Time Management</li>
+          <li>Responsive Web Design</li>
+          <li>Team Collaboration</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Contact section with details and form -->
+    <section class="contact" id="contact" data-animate>
+      <div class="container contact-container">
+        <div class="contact-text">
+          <h2>Get in Touch</h2>
+          <p>Ready to collaborate, discuss AI, or connect over student initiatives? Reach out and I'll respond soon.</p>
+          <ul class="contact-details">
+            <li><span>Email:</span> <a href="mailto:Baraazino04@gmail.com">Baraazino04@gmail.com</a></li>
+            <li><span>Phone:</span> <a href="tel:+966504198591">+966 50 419 8591</a></li>
+            <li><span>Location:</span> Dhahran, Saudi Arabia</li>
+            <li><span>LinkedIn:</span> <a href="https://www.linkedin.com/in/baraa-zino-9781672b0/" target="_blank" rel="noopener">Connect on LinkedIn</a></li>
+          </ul>
+        </div>
+        <!--Form html-->
+        <form class="contact-form" id="contact-form" novalidate>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" aria-describedby="name-error" required>
+          <span class="input-error" id="name-error" role="alert" aria-live="polite"></span>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" aria-describedby="email-error" required>
+          <span class="input-error" id="email-error" role="alert" aria-live="polite"></span>
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="How can I help?" rows="5" aria-describedby="message-error" required></textarea>
+          <span class="input-error" id="message-error" role="alert" aria-live="polite"></span>
+
+          <div class="contact-form__actions">
+            <button type="submit">Send message</button>
+          </div>
+
+          <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+   </main>
+   <!-- Global footer with dynamic year -->
+   <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; <span id="year"></span> Baraa Tammam Zino. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <!-- Connecting the js code with my HTML file -->
+  <script src="js/script.js" defer></script>
+</body>
+</html>
