@@ -388,7 +388,9 @@ body[data-theme="dark"] .spotlight {
 .spotlight,
 .experience,
 .projects,
+.github,
 .awards,
+.countdown,
 .skills,
 .contact {
   padding: 4rem 0;
@@ -396,6 +398,80 @@ body[data-theme="dark"] .spotlight {
 
 .projects {
   padding-top: 4.5rem;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-heading p {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted);
+}
+
+.project-visibility-toggle,
+.refresh-button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.project-visibility-toggle:hover,
+.project-visibility-toggle:focus,
+.refresh-button:hover,
+.refresh-button:focus {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.project-controls {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.project-controls__hint {
+  margin: 0;
+  color: var(--color-muted);
+  flex: 1 1 260px;
+  font-weight: 500;
+}
+
+.sort-label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: 600;
+}
+
+.sort-label select {
+  border-radius: 0.6rem;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  padding: 0.4rem 0.9rem;
+  background: transparent;
+  color: inherit;
+}
+
+.project-grid.is-hidden {
+  display: none;
 }
 
 .experience h2,
@@ -533,6 +609,127 @@ body[data-theme="dark"] .project-toggle {
 
 body[data-theme="dark"] .project-toggle[aria-expanded="true"] {
   color: var(--color-accent-contrast);
+}
+
+body[data-theme="dark"] .project-controls {
+  background-color: rgba(31, 41, 55, 0.7);
+}
+
+.github {
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.1), transparent 65%);
+}
+
+.github-repo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.github-repo {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.github-repo__name {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.github-repo__meta {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.github-repo__topics {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.github-topic {
+  background-color: rgba(37, 99, 235, 0.12);
+  color: var(--color-accent);
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.github-status {
+  min-height: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--color-muted);
+}
+
+.github-status[data-tone="success"] {
+  color: #16a34a;
+}
+
+.github-status[data-tone="error"] {
+  color: #dc2626;
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+}
+
+.countdown-card {
+  background: linear-gradient(120deg, #111827, #1f2937 55%, #2563eb);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  color: #f1f5f9;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  width: min(760px, 100%);
+}
+
+.countdown-card h2 {
+  margin-top: 0;
+  font-size: 2.1rem;
+}
+
+.countdown-card p {
+  margin-bottom: 2rem;
+}
+
+.countdown-timer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.countdown-segment {
+  background-color: rgba(15, 23, 42, 0.4);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1rem;
+}
+
+.countdown-value {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.countdown-label {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.85rem;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.countdown-message {
+  margin-top: 1.5rem;
+  font-weight: 600;
 }
 
 .awards-grid {
@@ -764,13 +961,29 @@ body[data-theme="dark"] .site-footer {
 
   .experience,
   .projects,
+  .github,
   .awards,
+  .countdown,
   .skills,
   .contact {
     padding: 3rem 0;
   }
 
+  .project-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sort-label {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .contact-form {
     padding: 1.5rem;
+  }
+
+  .countdown-timer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
