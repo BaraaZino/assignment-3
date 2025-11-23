@@ -296,6 +296,321 @@ const ProjectDetails = (() => {
 
   return { init };
 })();
+
+const ProjectControls = (() => {
+  const VISIBILITY_KEY = "portfolio-project-grid-visible";
+  const SORT_KEY = "portfolio-project-sort";
+
+  const readPreference = (key, fallback) => {
+    try {
+      return localStorage.getItem(key) ?? fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
+  const writePreference = (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // Ignore localStorage quota/privacy issues.
+    }
+  };
+
+  const init = () => {
+    const grid = document.getElementById("project-grid");
+    const sortSelect = document.getElementById("project-sort");
+    const toggleButton = document.getElementById("project-grid-toggle");
+
+    if (!grid || !sortSelect || !toggleButton) {
+      return;
+    }
+
+    const cards = Array.from(grid.querySelectorAll(".project-card"));
+    if (!cards.length) {
+      return;
+    }
+
+    const reorderCards = (sortValue) => {
+      const sorted = [...cards].sort((a, b) => {
+        if (sortValue === "name") {
+          return (a.dataset.title || "").localeCompare(b.dataset.title || "");
+        }
+
+        const aDate = new Date(a.dataset.date || "");
+        const bDate = new Date(b.dataset.date || "");
+
+        if (sortValue === "oldest") {
+          return aDate - bDate;
+        }
+
+        return bDate - aDate;
+      });
+
+      const fragment = document.createDocumentFragment();
+      sorted.forEach((card) => fragment.appendChild(card));
+      grid.appendChild(fragment);
+    };
+
+    const setGridVisibility = (isVisible) => {
+      grid.classList.toggle("is-hidden", !isVisible);
+      toggleButton.textContent = isVisible ? "Hide project grid" : "Show project grid";
+      toggleButton.setAttribute("aria-pressed", String(!isVisible));
+      writePreference(VISIBILITY_KEY, String(isVisible));
+    };
+
+    const storedSort = readPreference(SORT_KEY, "newest");
+    if (["newest", "oldest", "name"].includes(storedSort)) {
+      sortSelect.value = storedSort;
+    }
+
+    reorderCards(sortSelect.value);
+
+    sortSelect.addEventListener("change", () => {
+      const selected = sortSelect.value;
+      reorderCards(selected);
+      writePreference(SORT_KEY, selected);
+    });
+
+    const storedVisibility = readPreference(VISIBILITY_KEY, "true") !== "false";
+    setGridVisibility(storedVisibility);
+
+    toggleButton.addEventListener("click", () => {
+      const willBeVisible = grid.classList.contains("is-hidden");
+      setGridVisibility(willBeVisible);
+    });
+  };
+
+  return { init };
+})();
+
+const GitHubFeed = (() => {
+  const USERNAME = "baraazino";
+  const API_URL = `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=5`;
+  const CACHE_WINDOW_MS = 3 * 60 * 1000;
+
+  let reposContainer;
+  let statusElement;
+  let refreshButton;
+  let cachedRepos = null;
+  let lastFetched = 0;
+
+  const formatDate = (timestamp) => {
+    try {
+      const formatter = new Intl.DateTimeFormat(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+      return formatter.format(new Date(timestamp));
+    } catch {
+      return "";
+    }
+  };
+
+  const setStatus = (message, tone = "info") => {
+    if (!statusElement) {
+      return;
+    }
+
+    statusElement.textContent = message;
+    statusElement.dataset.tone = tone;
+  };
+
+  const createTopicChips = (topics = []) => {
+    const fragment = document.createDocumentFragment();
+    topics.slice(0, 3).forEach((topic) => {
+      const chip = document.createElement("span");
+      chip.className = "github-topic";
+      chip.textContent = topic;
+      fragment.appendChild(chip);
+    });
+    return fragment;
+  };
+
+  const createRepoElement = (repo) => {
+    const article = document.createElement("article");
+    article.className = "github-repo";
+
+    const heading = document.createElement("h3");
+    heading.className = "github-repo__name";
+    const repoLink = document.createElement("a");
+    repoLink.href = repo.html_url;
+    repoLink.target = "_blank";
+    repoLink.rel = "noopener";
+    repoLink.textContent = repo.name;
+    heading.appendChild(repoLink);
+
+    const description = document.createElement("p");
+    description.textContent = repo.description || "No description provided yet.";
+
+    const meta = document.createElement("p");
+    meta.className = "github-repo__meta";
+    const language = repo.language ? repo.language : "Unknown";
+    meta.textContent = `${language} • Updated ${formatDate(repo.updated_at)}`;
+
+    const statLine = document.createElement("p");
+    statLine.className = "github-repo__meta";
+    statLine.textContent = `Stars: ${repo.stargazers_count} • Forks: ${repo.forks_count}`;
+
+    article.appendChild(heading);
+    article.appendChild(description);
+    article.appendChild(meta);
+    article.appendChild(statLine);
+
+    if (Array.isArray(repo.topics) && repo.topics.length) {
+      const topicsLine = document.createElement("div");
+      topicsLine.className = "github-repo__topics";
+      topicsLine.appendChild(createTopicChips(repo.topics));
+      article.appendChild(topicsLine);
+    }
+
+    return article;
+  };
+
+  const renderRepos = (repos) => {
+    if (!reposContainer) {
+      return;
+    }
+
+    reposContainer.innerHTML = "";
+    const fragment = document.createDocumentFragment();
+    repos.slice(0, 5).forEach((repo) => {
+      fragment.appendChild(createRepoElement(repo));
+    });
+    reposContainer.appendChild(fragment);
+  };
+
+  const fetchRepos = async (force = false) => {
+    if (!reposContainer) {
+      return;
+    }
+
+    const isCacheFresh = cachedRepos && Date.now() - lastFetched < CACHE_WINDOW_MS;
+    if (!force && isCacheFresh) {
+      renderRepos(cachedRepos);
+      setStatus("Showing cached GitHub activity from the last sync.");
+      return;
+    }
+
+    setStatus("Loading GitHub repositories...");
+    try {
+      const response = await fetch(API_URL, {
+        headers: { Accept: "application/vnd.github+json" },
+      });
+
+      if (!response.ok) {
+        throw new Error(`GitHub responded with ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (!Array.isArray(data) || !data.length) {
+        reposContainer.innerHTML = "";
+        setStatus("No public repositories found right now.", "info");
+        cachedRepos = [];
+        lastFetched = Date.now();
+        return;
+      }
+
+      cachedRepos = data;
+      lastFetched = Date.now();
+      renderRepos(cachedRepos);
+      setStatus("Synced with GitHub moments ago.", "success");
+    } catch (error) {
+      console.error(error);
+      reposContainer.innerHTML = "";
+      setStatus("Unable to load GitHub activity. Please try again shortly.", "error");
+    }
+  };
+
+  const init = () => {
+    reposContainer = document.getElementById("github-repos");
+    statusElement = document.getElementById("github-status");
+    refreshButton = document.getElementById("github-refresh");
+
+    if (!reposContainer || !statusElement) {
+      return;
+    }
+
+    if (refreshButton) {
+      refreshButton.addEventListener("click", () => fetchRepos(true));
+    }
+
+    fetchRepos();
+  };
+
+  return { init };
+})();
+
+const GraduationCountdown = (() => {
+  const TARGET_DATE = new Date("2027-04-01T00:00:00+03:00");
+  let timerId = null;
+  let daysEl;
+  let hoursEl;
+  let minutesEl;
+  let secondsEl;
+  let messageEl;
+
+  const setSegments = ({ days, hours, minutes, seconds }) => {
+    if (daysEl) {
+      daysEl.textContent = String(days);
+    }
+    if (hoursEl) {
+      hoursEl.textContent = String(hours).padStart(2, "0");
+    }
+    if (minutesEl) {
+      minutesEl.textContent = String(minutes).padStart(2, "0");
+    }
+    if (secondsEl) {
+      secondsEl.textContent = String(seconds).padStart(2, "0");
+    }
+  };
+
+  const updateCountdown = () => {
+    const now = new Date();
+    const distance = TARGET_DATE.getTime() - now.getTime();
+
+    if (distance <= 0) {
+      setSegments({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      if (messageEl) {
+        messageEl.textContent = "It's graduation month! 🎓 Let's celebrate.";
+      }
+      if (timerId) {
+        window.clearInterval(timerId);
+      }
+      return;
+    }
+
+    const totalSeconds = Math.floor(distance / 1000);
+    const days = Math.floor(totalSeconds / (60 * 60 * 24));
+    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = totalSeconds % 60;
+
+    setSegments({ days, hours, minutes, seconds });
+
+    if (messageEl) {
+      messageEl.textContent = `Only ${days} days left until I walk the stage.`;
+    }
+  };
+
+  const init = () => {
+    daysEl = document.getElementById("countdown-days");
+    hoursEl = document.getElementById("countdown-hours");
+    minutesEl = document.getElementById("countdown-minutes");
+    secondsEl = document.getElementById("countdown-seconds");
+    messageEl = document.getElementById("countdown-message");
+
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+      return;
+    }
+
+    updateCountdown();
+    timerId = window.setInterval(updateCountdown, 1000);
+  };
+
+  return { init };
+})();
 // displayed error to user depending of what is the error when trying to submit
 const ContactForm = (() => {
   const FIELD_CONFIG = {
@@ -531,6 +846,9 @@ window.addEventListener("DOMContentLoaded", () => {
   Greeting.init();
   Spotlight.init();
   ProjectDetails.init();
+  ProjectControls.init();
+  GitHubFeed.init();
+  GraduationCountdown.init();
   ContactForm.init();
   RevealAnimations.init();
   Footer.init();
