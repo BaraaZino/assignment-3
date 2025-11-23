@@ -14,7 +14,7 @@
       <div class="brand">
         <!-- Display my name at the top-->
 
-        <a href="#top" class="brand__link">Baraa Tammam Zino</a>
+        <a href="" class="brand__link">Baraa Tammam Zino</a>
       </div>
       <nav class="site-nav" aria-label="Primary">
         <!--Navigation list -->
@@ -23,8 +23,10 @@
           <li><a href="#about">About</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#projects">Projects &amp; Research</a></li>
+          <li><a href="#github">GitHub</a></li>
           <li><a href="#awards">Awards</a></li>
           <li><a href="#skills">Skills &amp; Tools</a></li>
+          <li><a href="#countdown">Countdown</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -66,7 +68,7 @@
         </div>
         <!-- Display my image-->
         <div class="hero-image">
-          <img src="assets/images/baraa_zino_original.jpg" alt="Illustration representing Baraa Tammam Zino">
+          <img src="assets/images/baraa_zino_original.jpg" alt="Illustration representing Baraa Tammam Zino" decoding="async">
         </div>
       </div>
     </section>
@@ -146,10 +148,29 @@
     <!-- Featured projects and research summaries -->
     <section class="projects" id="projects" data-animate>
       <div class="container">
-        <h2>Projects &amp; Research</h2>
-        <div class="project-grid">
-          <article class="project-card" data-animate>
-            <img src="assets/images/DSC_5707_with_watermark_50.jpg" alt="Visualization for Jarir NLP project placeholder graphic">
+        <div class="section-heading">
+          <div>
+            <h2>Projects &amp; Research</h2>
+            <p>Explore experiments that blend AI, research, and front-end polish.</p>
+          </div>
+          <button type="button" class="project-visibility-toggle" id="project-grid-toggle" aria-pressed="false">
+            Hide project grid
+          </button>
+        </div>
+        <div class="project-controls">
+          <p class="project-controls__hint">Sort portfolio entries to review the newest updates or alphabetical order.</p>
+          <label class="sort-label" for="project-sort">
+            Sort by
+            <select id="project-sort" name="project-sort">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="name">Name (A–Z)</option>
+            </select>
+          </label>
+        </div>
+        <div class="project-grid" id="project-grid">
+          <article class="project-card" data-tags="ai,web" data-date="2024-09-01" data-title="Jarir NLP Engagement Toolkit" data-animate>
+            <img src="assets/images/DSC_5707_with_watermark_50.jpg" alt="Visualization for Jarir NLP project placeholder graphic" loading="lazy" decoding="async">
             <div class="project-card__body">
               <h3>Jarir NLP Engagement Toolkit</h3>
               <p>Natural language processing workflows that personalize Jarir Bookstore communications and automate product discovery.</p>
@@ -166,8 +187,8 @@
               </div>
             </div>
           </article>
-          <article class="project-card" data-animate>
-            <img src="assets/images/OCR.jpg" alt="Visualization of OCR research project placeholder graphic">
+          <article class="project-card" data-tags="research,ai" data-date="2024-05-15" data-title="OCR Post-Processing for Arabic Manuscripts" data-animate>
+            <img src="assets/images/OCR.jpg" alt="Visualization of OCR research project placeholder graphic" loading="lazy" decoding="async">
             <div class="project-card__body">
               <h3>OCR Post-Processing for Arabic Manuscripts</h3>
               <p>Research pipeline improving OCR accuracy for historical Arabic texts through custom language models and context-aware correction.</p>
@@ -184,7 +205,41 @@
               </div>
             </div>
           </article>
+          <article class="project-card" data-tags="service,marketplace" data-date="2023-12-05" data-title="Khadamaty Service Hub" data-animate>
+            <img src="" alt="Illustration for Khadamaty platform placeholder graphic" loading="lazy" decoding="async">
+            <div class="project-card__body">
+              <h3>Khadamaty Service Hub</h3>
+              <p>Marketplace connecting customers with trusted providers for home care, events, tutoring, and more through a single portal.</p>
+              <a href="https://github.com/BaraaZino/SWE363-Project" class="project-link" target="_blank" rel="noopener" aria-label="Khadamaty Service Hub GitHub repository">Explore roadmap</a>
+              <button type="button" class="project-toggle" aria-expanded="false">
+                Project details
+              </button>
+              <div class="project-details" hidden>
+                <ul>
+                  <li>Aggregates provider availability, pricing, and ratings so customers can compare options quickly.</li>
+                  <li>Includes a service-tracking dashboard that keeps both parties aligned on milestones and payments.</li>
+                  <li>Uses smart recommendations to highlight verified providers who match a customer’s request history.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
         </div>
+      </div>
+    </section>
+
+    <section class="github" id="github" data-animate>
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Latest GitHub Activity</h2>
+            <p>Live data from the GitHub API highlights the repositories I improved most recently.</p>
+          </div>
+          <button type="button" class="refresh-button" id="github-refresh">
+            Refresh feed
+          </button>
+        </div>
+        <p class="github-status" id="github-status" role="status"></p>
+        <div class="github-repo-list" id="github-repos" aria-live="polite"></div>
       </div>
     </section>
     <!-- Recognition and honors list -->
@@ -218,6 +273,33 @@
           <li>Responsive Web Design</li>
           <li>Team Collaboration</li>
         </ul>
+      </div>
+    </section>
+    <section class="countdown" id="countdown" data-animate>
+      <div class="container countdown-container">
+        <div class="countdown-card">
+          <h2>Countdown to April 2027 Graduation</h2>
+          <p>I'm on track to graduate in April 2027. Follow the live countdown that keeps my focus locked on the finish line.</p>
+          <div class="countdown-timer" id="graduation-countdown" role="timer" aria-live="polite">
+            <div class="countdown-segment">
+              <span class="countdown-value" id="countdown-days">0</span>
+              <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-segment">
+              <span class="countdown-value" id="countdown-hours">0</span>
+              <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-segment">
+              <span class="countdown-value" id="countdown-minutes">0</span>
+              <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-segment">
+              <span class="countdown-value" id="countdown-seconds">0</span>
+              <span class="countdown-label">Seconds</span>
+            </div>
+          </div>
+          <p class="countdown-message" id="countdown-message"></p>
+        </div>
       </div>
     </section>
     <!-- Contact section with details and form -->
