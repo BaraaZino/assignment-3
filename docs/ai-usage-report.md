@@ -1,9 +1,8 @@
 # AI Usage Report
 
 ## Tools Used
-- **ChatGPT-5 Codex:** Primary collaborator for ideation, code generation, debugging, accessibility checks, and documentation review.
+- **ChatGPT-5 Codex:** Primary collaborator for ideation, code generation, debugging, accessibility checks, and documentation review across Assignments 2 and 3.
 
-All AI interactions took place during February 2025 while building the Assignment 2 enhancements.
 
 ## Detailed Log
 
@@ -31,16 +30,43 @@ All AI interactions took place during February 2025 while building the Assignmen
 - **Edits & Integration:** Expanded the README and `docs/technical-documentation.md` with customized text, elaborated on testing details.  
 - **What I Learned:** Better appreciation for documenting interactive features explicitly and making it clear how AI participated in the workflow.
 
+### 4. Assignment 3 Scope & Feature Map
+- **Tool:** ChatGPT-5 Codex  
+- **Prompt:** “Help me plan Assignment 3 so it satisfies the rubric (API integration, complex logic, state management, countdown, AI report). Suggest which files should change and why.”  
+- **AI Output (excerpt):**  
+  > Add a new GitHub activity section below Projects, wire a fetch module, reuse DocumentFragment for rendering, and expand docs to explain the new modules plus AI usage.  
+- **Edits & Integration:** Used the plan to prioritize HTML structure changes (project controls, GitHub feed container, countdown section) before touching CSS/JS.  
+- **What I Learned:** Mapping rubric bullets directly to components up front keeps the implementation and documentation aligned.
+
+### 5. GitHub API Feed + Project Controls
+- **Tool:** ChatGPT-5 Codex  
+- **Prompt:** “Generate vanilla JS modules to (a) fetch my latest GitHub repos with cached responses and (b) add sortable, hideable project cards with persistent state. Include friendly error handling.”  
+- **AI Output (excerpt):**  
+  > Create a `GitHubFeed` module with a `CACHE_WINDOW_MS` constant, reuse `DocumentFragment`, and toggle a status banner for loading/error states. For the project grid, read/write `localStorage`, reorder nodes with `appendChild`, and expose a hide/show toggle for the section.  
+- **Edits & Integration:** Adapted the response to existing naming conventions, swapped in my GitHub username, added a refresh button, and pared the controls down to sorting plus a visibility toggle per the latest requirements.  
+- **What I Learned:** Reinforced how to keep DOM updates cheap and how little code it takes to persist UI state once the data attributes are designed carefully.
+
+### 6. Documentation Refresh & AI Log
+- **Tool:** ChatGPT-5 Codex  
+- **Prompt:** “Summarize the new Assignment 3 work for README and the AI usage report. Highlight API integration, countdown, and performance tweaks.”  
+- **AI Output (excerpt):**  
+  > Emphasize the GitHub feed, timer, and stateful controls under ‘Highlights’, and record specific prompts/outputs in the AI log.  
+- **Edits & Integration:** Rewrote the README/technical doc manually using the AI outline, then expanded this log with detailed prompts/outcomes.  
+- **What I Learned:** Writing the report right after coding kept context fresh and made it easier to articulate how AI shaped each feature.
+
 ## Benefits
 - Accelerated ideation for UI/UX flows without sacrificing accessibility.
 - Saved time drafting copy (spotlight blurbs, AI suggestions, documentation scaffolding).
 - Reduced back-and-forth debugging by validating approaches before coding.
+- Quickly scaffolded the Assignment 3 GitHub feed, sorting logic, and countdown timer without reinventing patterns.
 
 ## Challenges
 - Needed to adapt AI suggestions to fit existing styling conventions and naming schemes.
 - Balancing automated guidance with personal understanding took deliberate review to avoid treating outputs as black boxes.
+- API-centric prompts occasionally returned fetch examples using frameworks, so I reworked them into vanilla modules.
 
 ## Learning Outcomes
-- Strengthened knowledge of accessible tab patterns, accordions, and inline validation strategies.
+- Strengthened knowledge of accessible tab patterns, accordions, inline validation strategies, and now sort/toggle UI management.
 - Practiced turning AI-assisted drafts into production-ready copy and code while leaving space for personal commentary.
 - Documented AI usage in a reproducible format that links prompts, outputs, and final edits for transparency.
+- Built confidence in mixing cached API calls, DOM fragments, and animation-friendly timers without external libraries.

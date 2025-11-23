@@ -1,64 +1,66 @@
-# Baraa Zino Portfolio
+# Baraa Zino Portfolio (Assignment 3)
 
-A single-page personal portfolio highlighting experience, projects, awards, and ways to connect. Assignment 2 builds on the previous deliverable with richer interactivity, personalization, and AI-assisted UX improvements.
+A single-page portfolio that now meets the Assignment 3 rubric with live API data, complex UI logic, persistent state management, a graduation countdown, and transparent AI usage documentation.
 
-## Features
-- Responsive layout with sections for About, Experience, Projects, Awards, Skills, and Contact
-- Theme toggle that honors the system preference, persists via `localStorage`, and syncs with OS changes
-- Personalized hero greeting that remembers visitor names and updates dynamically
-- Interactive spotlight section, animated scroll reveals, and expandable project details
-- Contact form with inline validation, error messaging, and animated feedback
-- Modular CSS using design tokens plus comment placeholders for you to document the code later
-
-## Tech Stack
-- HTML5 for layout and semantic structure (`index.html`)
-- Modern CSS with custom properties and responsive grid utilities (`css/styles.css`)
-- Vanilla JavaScript modules for theming, UI interactions, and form handling (`js/script.js`)
+## Highlights
+- **GitHub API feed:** Pulls the five most recently updated repositories from the public GitHub API, caches responses client-side, and displays stars, forks, languages, and topics with graceful error handling.
+- **Sort and hide projects:** Visitors can reorder the grid by newest/oldest/name and toggle the section visibility. Preferences persist in `localStorage` for a consistent experience across visits.
+- **Contact safeguards:** Inline validation checks for empty fields, minimum character counts, and email format issues before revealing animated success states.
+- **Graduation countdown:** A live counter tracks the days, hours, minutes, and seconds until April 2027 graduation to showcase multi-step logic and timers.
+- **Theme & personalization:** Dark/light modes sync with system preferences, while personalized greetings and pre-filled form fields leverage saved visitor data.
+- **Performance aware:** Lazy-loaded imagery, DOM updates via `DocumentFragment`, and cached API responses keep the page responsive without extra build tooling.
 
 ## Project Structure
 ```
-.
-├── assets/
-│   └── images/
-│       ├── baraa_zino_original.jpg
-│       ├── DSC_5707_with_watermark_50.jpg
-│       └── OCR.jpg
+assignment-3/
+├── README.md
+├── index.html
 ├── css/
 │   └── styles.css
+├── js/
+│   └── script.js
+├── assets/
+│   └── images/
 ├── docs/
 │   ├── ai-usage-report.md
 │   └── technical-documentation.md
-├── js/
-│   └── script.js
-└── index.html
+└── .gitignore
 ```
 
-## Assignment 2 Enhancements
-- **Dynamic content:** Hero greeting personalizes itself using stored visitor names; spotlight tabs switch between focus areas without a page reload.
-- **Data handling:** Visitor preferences persist in `localStorage`, and the contact form surfaces inline validation feedback.
-- **Animations:** Sections marked with `data-animate` fade into view, and feedback messages animate so the user never misses a state change.
-- **Error handling:** Inline error text, `aria-invalid` states, and focused alerts guide users to fix issues immediately.
-- **AI integration:** AI-assisted planning and implementation steps are documented in `docs/ai-usage-report.md`, and the code keeps TODO placeholders ready for further AI-driven features.
-
 ## Getting Started
-1. Clone the repository or download the project files.
-2. Open `index.html` directly in your browser, or serve the folder with a simple HTTP server (for example `python3 -m http.server`).
-3. Explore the spotlight toggles, expand project accordions, personalize the greeting, and try the AI suggestion button to see the new interactions.
-4. Clear the browser’s `localStorage` if you want to test the personalization flow from a fresh state.
+1. Clone this repository or download the source zip.
+2. Open `index.html` in any modern browser **or** serve the folder with a simple HTTP server.
 
-## Customization Tips
-- **Content:** Update text in `index.html` to reflect new achievements or projects.
-- **Spotlight copy:** Swap out the focus-area text inside the `spotlight` section or add more buttons/cards as needed.
-- **Images:** Replace files in `assets/images/`.
-- **Styling:** Adjust colors, spacing, or typography in `css/styles.css`. Design tokens at the top control the overall theme.
-- **JavaScript:** Extend the modules in `js/script.js`. Each feature keeps a `// TODO` placeholder so you can add your own explanations later.
+### Optional local server
+```bash
+cd assignment-3
+python3 -m http.server 4173
+```
+Then visit `http://localhost:4173`.
 
-## AI Tools Summary
-- ChatGPT-5 Codex assisted with brainstorming interactive flows, drafting spotlight and contact copy, and reviewing accessibility considerations. Full logs live in `docs/ai-usage-report.md`.
+No build tools are required—everything runs with plain HTML, CSS, and vanilla JavaScript.
 
-## Notes
-- The contact form currently performs client-side validation only; connect it to a backend or service (e.g., Formspree, Netlify Forms) for real submissions.
-- Supplementary write-ups and AI documentation for the assignment live under `docs/`.
+## Feature Details
+### API Integration
+- `js/script.js` fetches `https://api.github.com/users/baraazino/repos?sort=updated&per_page=5` on load and whenever the refresh button is pressed.
+- Responses are cached for three minutes to avoid rate limits and keep the UI snappy.
+- Friendly status messaging covers loading, empty states, cached data, and network/API failures.
+
+### Complex Logic & State Management
+- The project grid supports sorting and visibility toggling backed by saved preferences (`localStorage`).
+- The contact form enforces non-empty fields, custom error messages, and animated success/error feedback.
+- Theme selection, preferred visitor names, and the project visibility state all persist between sessions.
+- The countdown timer continuously updates the UI, handling the graduation date rollover gracefully.
+
+### Performance & Accessibility
+- Project imagery loads lazily with async decoding to reduce initial bandwidth.
+- DOM mutations for the GitHub feed and project sorting use `DocumentFragment` to minimize layout thrash.
+- Semantic landmarks, aria-labels, keyboard-accessible toggles, and reduced-motion-friendly animations keep the interface inclusive.
+
+## Documentation & AI Usage
+- **`docs/technical-documentation.md`** details the architecture, responsive strategy, interaction logic, and testing notes.
+- **`docs/ai-usage-report.md`** records every AI-assisted action (tool, prompt, output, edits, and learning).
+- A short AI summary also appears in this README per the assignment guidelines.
 
 ## Deployed Webpage on GitHub
-- https://baraazino.github.io/assignment-2/
+- https://baraazino.github.io/assignment-3/
